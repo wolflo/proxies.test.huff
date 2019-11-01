@@ -1,6 +1,6 @@
 pragma solidity ^0.5.10;
 
-contract Factory {
+library Factory {
 
     function deploy(bytes memory initCode) internal returns (address dst) {
         assembly {
@@ -11,5 +11,10 @@ contract Factory {
                 revert(0, 0)
             }
         }
+    }
+
+
+    function codehash(address addr) internal view returns (bytes32 hash) {
+        assembly { hash := extcodehash(addr) }
     }
 }

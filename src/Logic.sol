@@ -1,16 +1,16 @@
 pragma solidity ^0.5.8;
 
 contract Logic {
-    uint internal _;    // reserve first storage slot for proxy target
-    uint public val;
+    uint256 internal _;    // reserve first storage slot for proxy target
+    uint256 public val;
 
     event LogCall(address src, uint256 val, bytes data);
 
-    function setVal(uint _val) public {
+    function setVal(uint256 _val) public {
         val = _val;
     }
 
-    function getVal() public view returns (uint) {
+    function getVal() public view returns (uint256) {
         return val;
     }
 

@@ -4,3 +4,4 @@ export SOLC_FLAGS=--optimize
 all    :; dapp build
 clean  :; dapp clean
 test   :; dapp test -v
+debug  :; hevm interactive

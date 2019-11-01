@@ -1,6 +1,5 @@
 pragma solidity ^0.5.10;
 
-
 import "ds-test/test.sol";
 
 import "./Logic.sol";
@@ -9,7 +8,7 @@ import "./HuffProxies.sol";
 
 contract StorageProxyTest is DSTest, HuffProxies {
     address internal logic;
-    address internal huff;
+    address payable internal huff;
     address internal sol;
 
     function setUp() public {
@@ -24,5 +23,16 @@ contract StorageProxyTest is DSTest, HuffProxies {
 
     function testDeployment() public {
         assertEq(huffStoreProxyBC.hash, Factory.codehash(huff));
+    }
+
+    function testForwardTx() public {
+        Logic proxy = Logic(huff);
+        proxy.setVal(1);
+        assertEq(proxy.getVal(), 1);
+    }
+
+    function testFailForwardRevert() public {
+        Logic proxy = Logic(huff);
+        proxy.fail();
     }
 }

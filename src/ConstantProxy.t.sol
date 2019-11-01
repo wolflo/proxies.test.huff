@@ -8,7 +8,7 @@ import "./HuffProxies.sol";
 
 contract ConstantProxyTest is DSTest, HuffProxies {
     address internal logic;
-    address internal huff;
+    address payable internal huff;
     address internal sol;
 
     function setUp() public {
@@ -17,6 +17,17 @@ contract ConstantProxyTest is DSTest, HuffProxies {
     }
 
     function testDeployment() public {
-        assertEq(huffConstProxyBC.hash, Factory.codehash(huff));
+        assertEq(Factory.codehash(huff), huffConstProxyBC.hash);
+    }
+
+    function testForwardTx() public {
+        Logic proxy = Logic(huff);
+        proxy.setVal(1);
+        assertEq(proxy.getVal(), 1);
+    }
+
+    function testFailForwardRevert() public {
+        Logic proxy = Logic(huff);
+        proxy.fail();
     }
 }

@@ -2,7 +2,8 @@ pragma solidity ^0.5.10;
 
 library Factory {
 
-    function deploy(bytes memory initCode) internal returns (address dst) {
+    // returns address payable because solidity is fucking stupid
+    function deploy(bytes memory initCode) internal returns (address payable dst) {
         assembly {
             dst := create(0, add(initCode, 0x20), mload(initCode))
 
